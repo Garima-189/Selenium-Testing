@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Covid-19 Registry</title>
+	<style type="text/css">
+		body{
+			font-family: "Lucida Console", Monaco, monospace;
+		}
+		#registry-form{
+			background-color: pink;
+			margin-left:20%;
+			margin-right: 20%;
+			margin-top: 5%;
+			border: 1px solid black;
+
+			
+		}
+		#content{
+			
+			margin:5%;
+		}
+		input[type=submit]{
+			background-color: black; /* Green */
+  			border: none;
+  			color: white;
+  			padding: 15px 32px;
+  			text-align: center;
+  			margin-left:40%;
+  			text-decoration: none;
+  			display: inline-block;
+  			font-size: 16px;
+		}
+		label, input {
+    /* In order to define widths */
+    display: inline-block;
+}
+
+label {
+    width: 30%;
+    /* Positions the label text beside the input */
+    text-align: right;
+    }
+
+label + input {
+    width: 30%;
+    /* Large margin-right to force the next element to the new-line
+       and margin-left to create a gutter between the label and input */
+    margin: 0 30% 1% 4%;
+}
+
+
+/* Only the submit button is matched by this selector,
+   but to be sure you could use an id or class for that button */
+input + input {
+    float: right;
+}
+#secondary_heading{
+	text-align: center;
+}
+#title{
+	margin-left: 36%;
+}
+	</style>
+
+
+</head>
+<body>
+	<h1 id="title"> Covid-19 Registry </h1>
+	<div id="registry-form">
+	<form method="post" action="/addinfo" >
+		<div id="content">
+			<div id="patient_info">
+		<h1> Patient Demographics </h1>
+		<label for="fname">First name:</label>
+		<input type="text" id="fname" name="fname"><br>
+		<label for="lname">Last name:</label>
+		<input type="text" id="lname" name="lname"><br>
+		<label for="dob"> DOB: </label>
+		<input type="date" id="dob" name="dob" ng-model="newLesson.dueDate"><br>
+		<div id="address"> Patient Address </div>
+		<label for="patient_street"> Street : </label>
+		<input type="text" id="patient_street" name="patient_street"><br>
+		<label for="patient_plotNo"> Plot-no : .</label>
+		<input type="text" id="patient_plotNo" name="patient_plotNo"><br>
+		<label for="patient_city"> City : </label>
+		<input type="text" id="patient_city" name="patient_city"><br>
+		<label for="patient_state"> State : </label>
+		<input type="text" id="patient_state" name="patient_state"><br>
+		<label for="source">Source of disease: </label>
+		<input type="text" id="source" name="source"><br>
+	</div>
+	<div id="lab_info">
+		<h1> Lab Details </h1>
+		<div id="address"> Lab Address </div>
+		<label for="street"> Street : </label>
+		<input type="text" id="street" name="street"><br>
+		<label for="plotNo"> Plot-no :</label>
+		<input type="text" id="plotNo" name="plotNo"><br>
+		<label for="city"> City : </label>
+		<input type="text" id="city" name="city"><br>
+		<label for="state"> State : </label>
+		<input type="text" id="state" name="state"><br>
+		
+		<label for="director">Lab director: </label>
+		<input type="text" id="director" name="director"><br>
+		<div id="secondary_heading"> Testing method used: </div>
+		 	
+			<label for="rapidAntibodiesTest">Rapid antibodies test</label>
+			<input type="radio" id="rapidAntibodiesTest" name="testingMethod" value="Rapid antibodies test">
+			
+			<label for="rt_pcr">RT-PCR test</label>
+			<input type="radio" id="rt_pcr" name="testingMethod" value="RT-PCR"><br>
+		<label for="specimen">Specimen: </label>
+		<input type="text" id="specimen" name="specimen">
+		<label for="performed_date"> Performed Date: </label>
+		<input type="date" id="performed_date" name="performed_date"><br>
+	</div>
+	<div id="results">
+		<h1> Results</h1>
+		<label for="positive">Positive </label>
+		<input type="radio" id="positive" name="results">
+		<label for="negative">Negative</label>
+		<input type="radio" id="negative" name="results">
+	</div>
+	<div id="submit_info">
+		<input type="submit" id="submit" name="submit" value="Submit">
+	</div>
+
+
+	</div>
+	<div><h1> &nbsp;</h1></div>
+
+		
+</form>
+</div>
+</body>
+</html>
+
+
+ 		
+
