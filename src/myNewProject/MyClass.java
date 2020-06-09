@@ -2,16 +2,18 @@ package myNewProject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 
 import java.io.File;
 
 import java.io.FileInputStream;
-
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import org.apache.poi.ss.usermodel.Sheet;
@@ -37,13 +39,14 @@ public class MyClass {
         		"rapidAntibodiesTest","rt_pcr","specimen","performed_date",
         		"positive","negative"};
         for(int i=1;i<rowCount+1;i++) {
+        	
         	Row row = sheet.getRow(i);
         	
         	
         	for(int j=0;j<row.getLastCellNum();j++) {
-        		if(j!=13 && j!=14 && j!=17 && j!=18)
+        		if(j!=13 && j!=14 && j!=17 && j!=18 && row.getCell(j)!=null)
         		driver.findElement(By.id(arr[j])).sendKeys(row.getCell(j).getStringCellValue());
-        		else {
+        		else if(row.getCell(j)!=null){
         			WebElement element = driver.findElement(By.id(arr[j]));
         			if(row.getCell(j).getBooleanCellValue()==true){
         				element.click();
@@ -51,19 +54,35 @@ public class MyClass {
         				
         			}
         		}
+        		
+        		
         	}
+        	driver.findElement(By.name("submit")).click();
+        	String output = driver.findElement(By.xpath("/html/body")).getText();
+        	
+        	System.out.print("Test"+output+"\n");
+        	Cell cell= row.createCell(20);
+        	if(output.equals("Information saved to database."))
+        			cell.setCellValue("Passed");
+        	else
+        		cell.setCellValue("Failed");
+        	
+        	driver.get("http://localhost:3000");
         }
+        FileOutputStream outputStream = new FileOutputStream(file);
+        myWorkBook.write(outputStream);
+        outputStream.close();
 		
 	}
 
 
     public static void main(String[] args) throws IOException {
         // declaration and instantiation of objects/variables
-    	System.setProperty("webdriver.gecko.driver","/home/garima/geckodriver");
-		WebDriver driver = new FirefoxDriver();
+//    	System.setProperty("webdriver.gecko.driver","/home/garima/geckodriver");
+//		WebDriver driver = new FirefoxDriver();
 		//comment the above 2 lines and uncomment below 2 lines to use Chrome
-		//System.setProperty("webdriver.chrome.driver","G:\\chromedriver.exe");
-		//WebDriver driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver","/home/garima/Downloads/driver/chromedriver");
+		WebDriver driver = new ChromeDriver();
     	
         String baseUrl = "http://localhost:3000";
         String expectedTitle = "http://localhost:3000/addinfo";
@@ -91,7 +110,7 @@ public class MyClass {
         // launch Fire fox and direct it to the Base URL
        
         
-        driver.findElement(By.name("submit")).click();
+        
         
         
         System.out.println(tagName);
@@ -103,11 +122,7 @@ public class MyClass {
          * compare the actual title of the page with the expected one and print
          * the result as "Passed" or "Failed"
          */
-        if (actualTitle.contentEquals(expectedTitle)){
-            System.out.println("Test Passed!");
-        } else {
-            System.out.println("Test Failed");
-        }
+        
        
         //close Fire fox
         driver.close();
