@@ -5,6 +5,7 @@ var port = 3000;
  var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
 
  var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
@@ -42,12 +43,17 @@ app.get("/", (req, res) => {
 
 app.post("/addinfo", (req, res) => {
 var myData = new User(req.body);
+
+
 myData.save()
 .then(item => {
-res.send("item saved to database");
+res.set('title','Passed');
+res.send('<h1> Information saved to database. </h1>');
 })
 .catch(err => {
-res.status(400).send("unable to save to database");
+	res.set('title','Failed');
+res.status(400).send('<h1>Unable to save to database</h1>');
+
 });
 });
  
